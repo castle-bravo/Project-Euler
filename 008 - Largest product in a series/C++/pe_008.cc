@@ -4,6 +4,7 @@
  * author:  Alexander P. Gosselin
  * e-mail:  alexandergosselin@gmail.com
  * date:    October 2, 2014
+ *          October 3, 2014 (modified)
  * 
  * note:    The largest possible product of 13 consecutive digits
  *          in a decimal number is 9^13. log_2(9^13) = ~41.2, so we
@@ -23,7 +24,20 @@
  * note 4:  When defining the function window_product, I tried to
  *          execute a ranged for loop on an array passed to the 
  *          function. While this works in the main function, the 
- *          compiler throws an error when 
+ *          compiler throws an error when the array is passed to the
+ *          function as a pointer. I asked for help on stackoverflow:
+ *          http://stackoverflow.com/q/26182907/2738025
+ *          Apparently this was due to array decaying into a pointer.
+ *          Marco A. answered my question and gave me the following
+ *          template function to execute a range based for loop on an
+ *          array of any size:
+ * 
+ *            template <std::size_t array_size>
+ *            void foo(int (&bar)[array_size]) {
+ *              for (int i : bar) {
+ *                cout << i << endl;
+ *              }
+ *            }
  */
 
 #include <fstream>
@@ -31,9 +45,10 @@
 using namespace std;
 
 const size_t DIGITS_IN_PRODUCT = 13;
+const size_t DIGITS_IN_NUMBER = 1000;
 
 void refill_window(string &series, size_t &i, uint8_t* window);
-uint64_t window_product(uint8_t* window);
+uint64_t window_product(uint8_t (&window)[DIGITS_IN_PRODUCT]);
 
 int main() {
   // read series.txt into a string without newline characters
@@ -43,12 +58,8 @@ int main() {
     series += line;
   }
   ifs.close();
-  if (series.size() < DIGITS_IN_PRODUCT) {
-    cout << "Error: series.txt contains too few elements." << endl;
-    exit(2);
-  }
   uint8_t window[DIGITS_IN_PRODUCT];
-  for (size_t i = 0; (i < DIGITS_IN_PRODUCT) && (i < series.length());
+  for (size_t i = 0; (i < DIGITS_IN_PRODUCT) && (i < DIGITS_IN_NUMBER);
        i++) {
     if (series[i] == '0') {
       refill_window(series, i, window);
@@ -58,7 +69,7 @@ int main() {
   }
   uint64_t product = window_product(window);
   uint64_t max_product = product;
-  for (size_t i = DIGITS_IN_PRODUCT; i < series.length(); i++) {
+  for (size_t i = DIGITS_IN_PRODUCT; i < DIGITS_IN_NUMBER; i++) {
     if (series[i] == '0') {
       refill_window(series, i, window);
       product = window_product(window);
@@ -72,12 +83,13 @@ int main() {
     }
   }
   cout << max_product << endl;
+  return 0;
 }
 
 void refill_window(string &series, size_t &i, uint8_t* window) {
   i++;
   for (size_t j = 0;
-       (j < DIGITS_IN_PRODUCT) && (i < series.length()); j++, i++) {
+       (j < DIGITS_IN_PRODUCT) && (i < DIGITS_IN_NUMBER); j++, i++) {
     if (series[i] == '0') {
       refill_window(series, i, window);
       return;
@@ -87,10 +99,10 @@ void refill_window(string &series, size_t &i, uint8_t* window) {
   i--; // correct for final increment in for loop.
 }
 
-uint64_t window_product(uint8_t* window) {
+uint64_t window_product(uint8_t (&window)[DIGITS_IN_PRODUCT]) {
   uint64_t product = 1;
-  for (size_t i = 0; i < DIGITS_IN_PRODUCT; i++) {
-    product *= window[i];
+  for (uint8_t element : window) {
+    product *= element;
   }
   return product;
 }

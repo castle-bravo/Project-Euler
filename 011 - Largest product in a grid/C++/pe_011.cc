@@ -110,6 +110,7 @@ int main () {
     }
   }
   cout << max_product << endl;
+  return 0;
 }
 
 grid_indices horizontal(int i, int j) {
