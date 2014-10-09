@@ -1,7 +1,7 @@
 /*
  * file:    pe_020.cc
  * title:   Factorial digit sum
- * author:  Alexander Gosselin
+ * author:  Alexander P. Gosselin
  * e-mail:  alexandergosselin@gmail.com
  * date:    October 8, 2014
  */
