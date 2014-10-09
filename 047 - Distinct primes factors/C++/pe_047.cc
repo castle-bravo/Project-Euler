@@ -11,22 +11,23 @@
 #include <vector>
 using namespace std;
 
-void expand_sieve();
-vector<int> factorize(int);
+void expand_sieve(vector<bool> &);
+vector<int> factorize(int, vector<bool> &);
 bool common_prime_exponent(vector<int> &, vector<int> &);
 bool is_positive(int i) { return (i > 0); }
 
-// initialize prime number sieve
-vector<bool> is_prime;
+
 
 int main() {
+  // initialize prime number sieve
+  vector<bool> is_prime;
   is_prime.push_back(false); // 1 is not prime
   is_prime.push_back(true); // 3 is prime
   // initialize vector of factorizations
   vector<vector<int>> factorizations;
   int i;
   for (i = 1; factorizations.size() < 4; i++) {
-    vector<int> factorization = factorize(i);
+    vector<int> factorization = factorize(i, is_prime);
     if (count_if(factorization.begin(), factorization.end(),
                  is_positive) != 4) {
       factorizations.clear();
@@ -45,7 +46,7 @@ int main() {
   cout << i - 4 << endl;
 }
 
-void expand_sieve() {
+void expand_sieve(vector<bool> &is_prime) {
   for (size_t n = is_prime.size(); true; n++) {
     is_prime.push_back(true);
     for (size_t i = 0; i*i < n; i++) {
@@ -62,7 +63,7 @@ void expand_sieve() {
   }
 }
 
-vector<int> factorize(int number) {
+vector<int> factorize(int number, vector<bool> &is_prime) {
   vector<int> factorization(1, 0);
   // if number is known to be prime, fill in the factorization without
   // testing for divisibility
@@ -92,7 +93,7 @@ vector<int> factorize(int number) {
     if (number == 1)
       break;
     else if (i == is_prime.size() - 1)
-      expand_sieve();
+      expand_sieve(is_prime);
   }
   return factorization;
 }

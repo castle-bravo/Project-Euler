@@ -13,3 +13,11 @@ do
     (/usr/bin/time -v clisp ./$lisp_file) &>> time.txt
     sed -i '7d' time.txt
 done
+
+for python_file in $(ls | grep "\.py")
+do
+    (time ./$python_file) &> time.txt
+    echo "" >> time.txt
+    (/usr/bin/time -v ./$python_file) &>> time.txt
+    sed -i '7d' time.txt
+done

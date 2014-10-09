@@ -21,6 +21,7 @@ using namespace std;
 const int N = 100;
 
 int main () {
-  int sum_square_difference = N*(N*N - 1)*(3*N + 2)/12;
+  int sum_square_difference = (N*(N*N - 1)*(3*N + 2))/12;
   cout << sum_square_difference << endl;
+  return 0;
 }

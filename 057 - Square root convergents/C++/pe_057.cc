@@ -6,6 +6,14 @@
  * date:    October 6, 2014
  * 
  * link:    https://projecteuler.net/problem=57
+ * 
+ * note:    I cheated a little an used the fact that the 1000th
+ *          expansion of the numerator has 384 digits to reserve that
+ *          much memory for the numerator and denominator vecints.
+ *          The vecints were pushing back into random blocks of memory
+ *          and corrupting themselsves, resulting in random values of
+ *          size(). I didn't look any further into this, but it could
+ *          be an issue in the future.
  */
 
 #include <iostream>

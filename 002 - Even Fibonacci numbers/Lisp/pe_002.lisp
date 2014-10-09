@@ -2,7 +2,7 @@
 file:   pe_002.lisp
 title:  Even Fibonacci numbers
 author: Alexander P. Gosselin
-mail: alexandergosselin@gmail.com
+mail:   alexandergosselin@gmail.com
 date:   September 29, 2014
 |#
 

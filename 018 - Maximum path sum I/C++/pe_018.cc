@@ -15,7 +15,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
   ifstream ifs ("../triangle.txt");
-  if(ifs.is_open() == 0) { 
+  if (ifs.is_open() == 0) { 
     cout << "Error: unable to open triangle.txt\n";
     return 0;
   }
@@ -25,18 +25,18 @@ int main(int argc, char **argv)
   string entry;
   int i;
   int j;
-  for(i = 0; ifs.peek() != EOF; i++) {
+  for (i = 0; ifs.peek() != EOF; i++) {
     triangle.push_back(vector<int>(i+1));
     getline(ifs, row);
-    for(j = 0; j <= i; j++) {
+    for (j = 0; j <= i; j++) {
       entry = {row[3*j], row[3*j+1]};
       triangle[i][j] = stoi(entry);
     }
   }
   i--; //decrement i to prevent segmentation fault
   //calculate the maximum path sum
-  while(i > 0) {
-    for(j = i; j > 0; j--) {
+  while (i > 0) {
+    for (j = i; j > 0; j--) {
       if(triangle[i][j] > triangle[i][j-1]) {
         triangle[i-1][j-1] += triangle[i][j];
       } else {

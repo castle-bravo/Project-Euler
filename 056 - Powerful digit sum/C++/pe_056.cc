@@ -12,7 +12,6 @@
 using namespace std;
 
 const int RANGE_END = 100;
-const int MAX_DIGITS = 200;
 
 typedef vector<int8_t> vecint_t;
 
@@ -25,7 +24,6 @@ int main() {
   for (int a = 2; a < RANGE_END; a++) {
     vecint_t a_digits = from_int(a);
     vecint_t power_digits(a_digits);
-    //power_digits.reserve(MAX_DIGITS);
     for (int b = 2; b < RANGE_END; b++) {
       multiply(power_digits, a_digits);
       int power_digit_sum = digit_sum(power_digits);
