@@ -1,9 +1,9 @@
 #|
-file:   pe_002.lisp
-title:  Even Fibonacci numbers
+file:   pe_003.lisp
+title:  Largest prime factor
 author: Alexander P. Gosselin
 mail:   alexandergosselin@gmail.com
-date:   September 29, 2014
+date:   October 8, 2014
 |#
 
 (defun largest-prime-factor (n)
