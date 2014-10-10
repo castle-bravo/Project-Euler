@@ -32,7 +32,8 @@ int main() {
           for (char c : plain) {
             ascii_sum += c;
           }
-          cout << ascii_sum << sum;
+          cout << ascii_sum << endl;;
+          return 0;
         }
       }
     }
